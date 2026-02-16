@@ -1,7 +1,7 @@
 targetScope = 'subscription'
 
 param location string = 'canadacentral'
-param userName string = 'nsg-block'
+param userName string = 'lab2'
 param resourceName string = 'api'
 param sshPublicKey string
 

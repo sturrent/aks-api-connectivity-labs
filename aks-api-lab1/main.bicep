@@ -1,7 +1,7 @@
 targetScope = 'subscription'
 
 param location string = 'canadacentral'
-param userName string = 'auth-ip'
+param userName string = 'lab1'
 param resourceName string = 'api'
 
 var aksResourceGroupName = 'aks-${resourceName}-${userName}-rg'
