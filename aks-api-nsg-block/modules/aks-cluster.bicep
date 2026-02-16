@@ -20,6 +20,9 @@ resource aks 'Microsoft.ContainerService/managedClusters@2025-03-01' = {
   properties: {
     dnsPrefix: clusterName
     enableRBAC: true
+    apiServerAccessProfile: {
+      enablePrivateCluster: true
+    }
     agentPoolProfiles: [
       {
         name: agentpoolName
@@ -44,5 +47,6 @@ resource aks 'Microsoft.ContainerService/managedClusters@2025-03-01' = {
 var config = aks.listClusterAdminCredential().kubeconfigs[0].value
 
 output aks_principal_id string = aks.identity.principalId
-output controlPlaneFQDN string = aks.properties.fqdn
+output privateFqdn string = aks.properties.privateFQDN
+output nodeResourceGroup string = aks.properties.nodeResourceGroup
 output kubeConfig string = config

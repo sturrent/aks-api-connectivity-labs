@@ -2,9 +2,7 @@ param location string
 param vmName string
 param subnetId string
 param adminUsername string = 'azureuser'
-
-@secure()
-param adminPassword string
+param sshPublicKey string
 
 resource publicIp 'Microsoft.Network/publicIPAddresses@2024-07-01' = {
   name: '${vmName}-pip'
@@ -48,7 +46,17 @@ resource vm 'Microsoft.Compute/virtualMachines@2024-07-01' = {
     osProfile: {
       computerName: vmName
       adminUsername: adminUsername
-      adminPassword: adminPassword
+      linuxConfiguration: {
+        disablePasswordAuthentication: true
+        ssh: {
+          publicKeys: [
+            {
+              path: '/home/${adminUsername}/.ssh/authorized_keys'
+              keyData: sshPublicKey
+            }
+          ]
+        }
+      }
     }
     storageProfile: {
       imageReference: {
